@@ -9,3 +9,10 @@
 //    ant.mkdir(dir:"${basedir}/grails-app/jobs")
 //
 ant.mkdir(dir:"${basedir}/test/spec")
+ant.mkdir(dir:"${basedir}/src/resources")
+
+// Copy required javascript files.
+ant.copy(todir: "${basedir}/src/resources")
+{
+	fileset(dir: "${pluginBasedir}/src/resources")
+}

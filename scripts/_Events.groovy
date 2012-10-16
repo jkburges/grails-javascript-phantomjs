@@ -1,4 +1,4 @@
-includeTargets << new File("${basedir}/scripts/_RunJavaScriptTests.groovy")
+includeTargets << new File("${jasminePhantomjsPluginDir}/scripts/_RunJavaScriptTests.groovy")
 
 eventTestPhaseEnd = { phase ->
     if (phase == "other") {

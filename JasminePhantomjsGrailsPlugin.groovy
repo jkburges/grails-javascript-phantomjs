@@ -10,12 +10,11 @@ class JasminePhantomjsGrailsPlugin {
             "grails-app/views/error.gsp"
     ]
 
-    // TODO Fill in these fields
-    def author = "Your name"
-    def authorEmail = ""
-    def title = "Plugin summary/headline"
+    def author = "Jon Burgess/IMOS"
+    def authorEmail = "jkburges@gmail.com"
+    def title = "Jasmine Spec Runner for Grails"
     def description = '''\\
-Brief description of the plugin.
+Integrates jasmine javascript tests with the standard grails test mechanism.
 '''
 
     // URL to the plugin's documentation
