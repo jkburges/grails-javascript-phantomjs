@@ -10,5 +10,5 @@ before_install:
  - sudo apt-get -y install grails-ppa
  - sudo apt-get install grails-1.3.7 # or the grails version.
 
-script: grails clean package-plugin
+script: grails-1.3.7 clean package-plugin
 
