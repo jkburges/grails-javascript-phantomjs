@@ -11,5 +11,5 @@ before_install:
  - sudo apt-get install grails-1.3.7 # or the grails version.
  - sudo update-alternatives --set grails /usr/share/grails/1.3.7/bin/grails
 
-script: grails clean package-plugin
+script: grails clean && grails package-plugin
 
