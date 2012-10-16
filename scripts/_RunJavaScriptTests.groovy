@@ -1,6 +1,6 @@
 def specDir = "test/spec"
 def targetDir = "target/test-reports/plain"
-def testResourcesDir = "test/resources/lib"
+def testResourcesDir = "src/resources/lib"
 
 target(runJsTests: 'Runs Jasmine Tests') {
     event("StatusUpdate", ["Starting Jasmine test phase"])
@@ -21,7 +21,7 @@ target(runJsTests: 'Runs Jasmine Tests') {
         def ant = new AntBuilder()
         ant.exec(outputproperty: "cmdOut", errorproperty: "cmdErr", resultproperty: "cmdExit", failonerror: "false", executable: "/usr/bin/env") {
             arg(line: "DISPLAY=:1")
-            arg(line: "/usr/local/bin/phantomjs")
+			arg(line: "phantomjs")
             arg(line: "${testResourcesDir}/phantomjs-jasmine-runner.js")
             arg(line: "${spec.canonicalPath}")
         }
