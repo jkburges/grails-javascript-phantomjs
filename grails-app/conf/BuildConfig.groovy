@@ -1,6 +1,15 @@
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
+
+grails.project.repos.default = "emiiRepo"
+grails.project.repos.emiiRepo.url = "https://svn.emii.org.au/repos/grails-plugins"
+grails.project.repos.emiiRepo.type = "svn"
+//grails.project.repos.emiiRepo.username = "admin"
+//grails.project.repos.emiiRepo.password = "password"
+//grails.project.repos.emiiRepo.portal = "emiiRepo"
+
+
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
