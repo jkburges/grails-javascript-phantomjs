@@ -12,33 +12,52 @@ target(runJsTests: 'Runs Jasmine Tests') {
         }
     }
 
+	def testCaseName = "jasmine tests"
+	event("TestCaseStart", [testCaseName])
+	
     def startTime = new Date()
     def failures = 0
     def buildPassed = true
+	
     specsToRun.each { File spec ->
         println "Running ${spec.name}..."
+		event("TestStart", [spec.name])
         def outputFile = "${targetDir}/TEST-${spec.name.replace('-', '').replace('.html', '.xml')}"
         def ant = new AntBuilder()
-        ant.exec(outputproperty: "cmdOut", errorproperty: "cmdErr", resultproperty: "cmdExit", failonerror: "false", executable: "/usr/bin/env") {
-            arg(line: "DISPLAY=:1")
-			arg(line: "phantomjs")
-            arg(line: "${testResourcesDir}/phantomjs-jasmine-runner.js")
-            arg(line: "${spec.canonicalPath}")
-        }
-        if (ant.project.properties.cmdExit != "0") {
-            buildPassed = false
-            println "\tFAILED!"
-            failures++
-        } else {
-            println "\tPASSED"
-        }
-        new File(outputFile).write(ant.project.properties.cmdOut)
+		
+		try {
+	        ant.exec(outputproperty: "cmdOut", errorproperty: "cmdErr", resultproperty: "cmdExit", failonerror: "false", executable: "/usr/bin/env") {
+	            arg(line: "DISPLAY=:1")
+				arg(line: "phantomjs")
+	            arg(line: "${testResourcesDir}/phantomjs-jasmine-runner.js")
+	            arg(line: "${spec.canonicalPath}")
+	        }
+	        new File(outputFile).write(ant.project.properties.cmdOut)
+			
+			if (ant.project.properties.cmdExit != "0") {
+				buildPassed = false
+				println "\tFAILED!"
+				failures++
+				event("TestFailure", [spec.name, "failed", false])
+			} else {
+				println "\tPASSED"
+				event("TestEnd", [spec.name])
+			}
+		}
+		catch (Throwable t) {
+			event("TestFailure", [spec.name, t, true])
+		}
     }
 
     println "-------------------------------------------------------"
     println "Jasmine Tests Completed in ${new Date().getTime() - startTime.getTime()}ms"
     def msg = "Jasmine Tests ${buildPassed ? "PASSED" : "FAILED"} - view reports in ${targetDir}"
     println "-------------------------------------------------------"
-    event("StatusFinal", [msg])
+	
+	event("TestCaseEnd", [testCaseName, null, null])
+	
+	event("StatusFinal" [msg])
+	
+	
     return buildPassed ? 0 : 1
 }
